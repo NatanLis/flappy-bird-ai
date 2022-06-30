@@ -1,9 +1,13 @@
+//creating & moving & deletng the pair of the pipies
+
 class PipePair{
+  //craating  pipes
   constructor(){
     this.min_Height_Top=floor(canvas.height/6);
     this.min_Height_Bot=floor(canvas.height/6);
 
-    this.min_Space=175;
+    //range of space beteween pipes
+    this.min_Space=100;
     this.max_Space=250;
 
     this.max_Height_Top=canvas.height-(this.min_Space+this.min_Height_Bot);
@@ -38,10 +42,12 @@ class PipePair{
   getX(){
     return this.bottomPipe.getX();
   }
+  //checking if pont can be givev
   point(p){
-    if(p.x+p.size/*/2*/>this.getX()/*+this.bottomPipe.width/2*/){
+    if(p.x+p.size>this.getX()){
       for(x=0;x<this.pointGave.length;x++){
         if(this.pointGave[x]==p.index){
+
           return false;
         }
       }

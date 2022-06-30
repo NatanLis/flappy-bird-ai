@@ -33,11 +33,12 @@ class Bird{
     if(isBest){
       fill('red');
     }else{
-      fill('white');
+      fill('pink');
     }
     rect(this.x,this.y, this.size,this.height);
 
     //Hitbox visualizer
+    //Bird's hitboxes
     if(visualizeHitboxes){
       fill(0);
       rect(this.x-hitboxesSize/2,this.y-hitboxesSize/2, hitboxesSize,hitboxesSize);
@@ -50,13 +51,19 @@ class Bird{
 
     //Sight visualizer
     if(visualizeSights){
+      // Top right
       line(this.x+this.size/2,this.y+this.height/2,(this.closest().getX()+this.closest().bottomPipe.width),(this.closest().topPipe.topY+this.closest().topPipe.height));
+      // Bottom right
       line(this.x+this.size/2,this.y+this.height/2,(this.closest().getX()+this.closest().bottomPipe.width),this.closest().bottomPipe.topY);
+      // Top Left
       line(this.x+this.size/2,this.y+this.height/2,this.closest().getX(),(this.closest().topPipe.topY+this.closest().topPipe.height));
+      // Bottom Left
       line(this.x+this.size/2,this.y+this.height/2,this.closest().getX(),this.closest().bottomPipe.topY);
     }
 
   }
+
+  // Updating the score
   update(){
     if(this.alive){
       if(pipePair.point(this) || pipePair2.point(this)){
@@ -83,12 +90,15 @@ class Bird{
       }
     }
   }
+
+  // if bird is off the screan
   offscreen(){
     if(this.y<0){
       return true;
     }
     return false;
   }
+  //velocity of asceandance
   flap(){
     if(this.alive){
       this.velY=-6;//-6
@@ -97,26 +107,28 @@ class Bird{
       this.timeScore--;
     }
   }
+  //death
   die(){
     this.alive=false;
   }
 
   inputss(){
     let input = [];
+    //Distance to closest top pipe
+    input[0]=int(dist(this.x+this.size/2,this.y+this.height/2,(this.closest().getX()+this.closest().bottomPipe.width),(this.closest().topPipe.topY+this.closest().topPipe.height)));
 
-    input[0]=int(dist(this.x+this.size/2,this.y+this.height/2,(this.closest().getX()+this.closest().bottomPipe.width),(this.closest().topPipe.topY+this.closest().topPipe.height))); //Distance to closest top pipe
-    input[1]=int(dist(this.x+this.size/2,this.y+this.height/2,(this.closest().getX()+this.closest().bottomPipe.width),this.closest().bottomPipe.topY)); //Distance to closest bottom pipe
+    //Distance to closest bottom pipe
+    input[1]=int(dist(this.x+this.size/2,this.y+this.height/2,(this.closest().getX()+this.closest().bottomPipe.width),this.closest().bottomPipe.topY)); 
+
+    //Distance to closes celing
     input[2]=(this.y+this.height/2)-(this.closest().topPipe.topY+this.closest().topPipe.height);
-    input[3]=this.closest().bottomPipe.topY-(this.y+this.height/2);
-    /*
-    input[4]=this.y;
-    input[5]=this.closest().getX()-this.x;
-    input[6]=int(dist(this.x+this.size/2,this.y+this.height/2,this.closest().getX(),(this.closest().topPipe.topY+this.closest().topPipe.height)));
-    input[7]=int(dist(this.x+this.size/2,this.y+this.height/2,this.closest().getX(),this.closest().bottomPipe.topY));
-    */
 
+    //Distance to closes bootom floor
+    input[3]=this.closest().bottomPipe.topY-(this.y+this.height/2);
     return input;
   }
+
+  //calculatin the closet  hitbox
   closest(){
     if(pipePair.getX()<pipePair2.getX()){
       if(pipePair.getX()+(pipePair.bottomPipe.width)-this.x>0){

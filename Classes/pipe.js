@@ -5,16 +5,12 @@ class Pipe{
     this.width = 100;
     this.x=canvas.width+this.width;
     if(!isTop){
-      //console.log(canvas.height-this.height);
       this.topY=canvas.height-this.height;
     }else{
       this.topY=0;
     }
   }
   show(){
-    /*noStroke();
-    fill(0,204,0);
-    rect(this.x,this.topY,this.width,this.height);*/
     if(this.isTop){
       image(pipeTop,this.x,this.topY,this.width,this.height);
     }else{
@@ -32,32 +28,38 @@ class Pipe{
   update(){
       this.x-=gamSpeed;
   }
+
+  //condition to death throught coloding with pipe
   collide(p){
     //console.log((p.x+p.size/2) + " - "+this.x +" - "+(p.x+p.size/2)+" - "+(this.x+this.width)+" | "+floor(p.y)+" - "+this.height+" - "+this.topY);
     if((p.x>=this.x &&p.x<=this.x+this.width)|| (p.x+p.size>=this.x && p.x+p.size<=this.x+this.width)||(p.x+p.size/2>=this.x&&p.x+p.size/2<=this.x+this.width)){
       if(this.isTop){
         if(p.y<=this.topY+this.height){
-          //console.log("trigTop");
+          console.log("trigTop");
           return true;
         }
       }else{
         if(p.y+p.height>=this.topY){
-          //console.log("trigBot");
+          console.log("trigBot");
           return true;
         }
       }
       return false;
     }
   }
+
+  //condition to death throught going out of the screen
   offscreen(){
     if(this.x+this.width<0){
       return true;
     }
     return false;
   }
-  getX(){ //Check if used
+  //Check position of the bird
+  getX(){
     return this.x;
   }
+  //update position of the bird
   setX(x){
     this.x=x;
   }

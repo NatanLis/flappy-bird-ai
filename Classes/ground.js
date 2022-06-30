@@ -1,3 +1,4 @@
+//spead of obstacles
 class Ground{
   constructor(){
     this.speed=gamSpeed;

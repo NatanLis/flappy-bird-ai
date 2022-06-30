@@ -2,9 +2,11 @@
   <head>
     <link rel="stylesheet" href="Ressources/css.css">
 
+    <!-- UZYWAMY DWÓCH BIBLIOTEK P5.JS DO GRY I DRUGĄ DO TWORZENIA WYKRESU WYNIKU OD ITERACJI  -->
     <script language=" javascript" type="text/javascript" src="Libs/p5.js"></script>
     <script language="javascript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
+    <!-- SAMA SZTUCZNA ITELIGENCJA  -->
     <script language=" javascript" type="text/javascript" src="Neat/NeuralNetwork/ActivationFunction.js"></script>
     <script language=" javascript" type="text/javascript" src="Neat/NeuralNetwork/Layer.js"></script>
     <script language=" javascript" type="text/javascript" src="Neat/NeuralNetwork/Network.js"></script>
@@ -12,6 +14,7 @@
     <script language=" javascript" type="text/javascript" src="Neat/Neat.js"></script>
     <script language=" javascript" type="text/javascript" src="Neat/Creature.js"></script>
 
+    <!-- SAMA GRA  -->
     <script language=" javascript" type="text/javascript" src="sketch.js"></script>
     <script language=" javascript" type="text/javascript" src="Classes/bird.js"></script>
     <script language=" javascript" type="text/javascript" src="Classes/pipe.js"></script>
@@ -20,6 +23,7 @@
   </head>
   <body>
 
+    <!-- DANE GRY  -->
     <div class="optionsPane">
 
       <label for="informationsDisplay">Global information : </label>
@@ -74,18 +78,6 @@
           <label for="mutationRateSlider">Mutation rate : </label>
           <span id="mutationRateSlider"></span>
           <span id="mutationRateDisplay"></span>
-        </div>
-      </div>
-
-      <label for="play">Play (WIP) : </label>
-      <div id="play" class="optDiv">
-        <div class="option">
-          <input type="checkbox" id="boxPlay">
-          <label for="boxSights"> Play</label>
-        </div>
-        <div class="option">
-          <input type="checkbox" id="boxPlayBot">
-          <label for="boxSights"> Against bot</label>
         </div>
       </div>
 
