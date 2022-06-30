@@ -14,6 +14,7 @@ class Node{
     this.weights = weights;
   }
 
+  //weight of neuron connection
   init(weights){
     for(let x=0;x<weights;x++){
       this.weights.push(random(-1, 1));

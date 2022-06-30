@@ -80,9 +80,9 @@ class Bird{
       if(pipePair.collide(this) || ground.collide(this) || pipePair2.collide(this)){
         this.die();
       }
-      /*if(this.offscreen()){
+      if(this.offscreen()){
         this.die();
-      }*/
+      }
     }else{
       if(canvas.height-this.y>this.size/2){
         this.velY+=gravity;

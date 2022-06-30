@@ -1,23 +1,5 @@
-/*
-e.g.
-{
-  layer: [
-    {
-      node: 5
-    },
-    {
-      node: 3,
-      actFunction: 'SOFTMAX'
-    }
-  ]
-}
-
-
-*/
-
-
 class NeuralNetwork{
-  constructor(config){ //No hidden layer implementation yet
+  constructor(config){
     this.layer = [];
     for(let x=0;x<config.layer.length;x++){
       if(x==0){
@@ -91,5 +73,4 @@ class NeuralNetwork{
       }
     }
   }
-
 }

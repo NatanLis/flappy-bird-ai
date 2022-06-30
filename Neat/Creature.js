@@ -1,3 +1,4 @@
+//Creating examples of birds for the AI
 class Creature{
   constructor(nn, genes){
     this.nn = nn;

@@ -55,27 +55,33 @@ var chartData = {datasets:[{
 	borderColor: ['#3669cf']
 }], labels:[]};
 
-function addScore(data) { //Chart update function
+//Chart update function
+function addScore(data) {
     scoreChart.data.labels.push(neat.generation);
 		scoreChart.data.datasets.forEach((dataset) => {
         dataset.data.push(data);
     });
     scoreChart.update();
 }
-function randomB(min, max) { //Random function
+
+//Random function, to decide height of pair of pipes
+function randomB(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+//Downloading assets
 function preload(){
   bird = loadImage("https://media.discordapp.net/attachments/350662896839294977/818878642481922118/bird3.png?width=84&height=45");
   pipeBottom = loadImage("https://media.discordapp.net/attachments/350662896839294977/819162352301244426/HugePipeBottom.png?width=101&height=676");
   pipeTop = loadImage("https://media.discordapp.net/attachments/350662896839294977/819162817453097031/HugePipeTop.png?width=101&height=676");
 }
 
+
 function setup(){
 		//Main canvas
-    window.canvas = createCanvas(800, 800)/*.position(windowWidth/2-canvas.width/2, 20)*/;
+    window.canvas = createCanvas(800, 800)
 		window.canvas.parent('mainCanvas');
+
 		//Sliders
 		speedSlider = createSlider(0, 30, 1);
 		speedSlider.parent('speedSlider');
@@ -103,15 +109,15 @@ function setup(){
     pipePair.setX(canvas.width);
     pipePair2.setX(canvas.width*1.5+pipePair2.topPipe.width);
 
-  	//addScore(scores[neat.generation]);
-
+	//Starting position of bird
     for(x=0; x<numGen;x++){
       birds[x] = new Bird(canvas.width/4, canvas.height/2+1*x, bird,x);
     }
 		nnDS = createVector(nnDS[0], nnDS[1]);
 		nnMove = createVector(nnMove[0], nnMove[1]);
-
 }
+
+//Drawing the game
 function draw(){
 	globalSpeed=speedSlider.value();
 	document.getElementById('speedDisplay').innerHTML = globalSpeed;
@@ -136,6 +142,7 @@ function draw(){
 
   background(135,206,250);
 
+	//Moving the pipes
 	if(globalSpeed!=0){
 		for (let n = 0; n < globalSpeed; n++) {
 			//BG and components display
