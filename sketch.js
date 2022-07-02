@@ -83,7 +83,7 @@ function setup(){
 		window.canvas.parent('mainCanvas');
 
 		//Sliders
-		speedSlider = createSlider(0, 30, 1);
+		speedSlider = createSlider(0, 30, 5);
 		speedSlider.parent('speedSlider');
 
 		creatureSlider = createSlider(1, 1000, numGen);

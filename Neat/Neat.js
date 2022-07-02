@@ -1,12 +1,12 @@
 class Neat{
-  constructor(popSize, mutationRate, nnConfig){
+  constructor(numGen, mutationRate, nnConfig){
     this.mutationRate = mutationRate;
     this.pop = [];
     this.nnConfig = nnConfig;
     this.generation=0;
-    this.popSize = popSize;
-    for(let x=0;x<this.popSize;x++){
-      let tWeights = [];
+    this.numGen = numGen;
+    for(let x=0;x<this.numGen;x++){
+      let Weights = [];
       for(let i=0;i<nnConfig.layer.length-1;i++){ //For each layers except output one
         let tNodes = [];
         for(let j=0;j<nnConfig.layer[i].node;j++){ //For each nodes in this layer
@@ -16,17 +16,16 @@ class Neat{
           }
           tNodes.push(tNW);
         }
-        tWeights.push(tNodes);
+        Weights.push(tNodes);
       }
       let nn = new NeuralNetwork(this.nnConfig);
-      nn.init(tWeights);
-      this.pop.push(new Creature(nn, tWeights));
+      nn.init(Weights);
+      this.pop.push(new Creature(nn, Weights));
     }
   }
 
   setInputs(inputs, index){
-    //console.log(this.pop[index] + " - "+index);
-    this.pop[index].nn.setInputs(inputs); //ERROR
+    this.pop[index].nn.setInputs(inputs);
   }
 
   feedForward(){
@@ -35,10 +34,12 @@ class Neat{
     }
   }
 
+  //For counting fittness points
   setFitness(fitness, index){
       this.pop[index].setFit(fitness);
   }
 
+  //Output for flpas
   getOutput(index){
     let output=[];
     for(let x=0;x<this.pop[index].nn.layer[this.pop[index].nn.layer.length-1].node.length;x++){
@@ -47,6 +48,7 @@ class Neat{
     return output;
   }
 
+  //Choosing the best bird
   getBestCreature(){
     let temp = [{fit: -1},0];
     for(let x=0;x<this.pop.length;x++){
@@ -57,6 +59,7 @@ class Neat{
     return temp; [creature, index]
   }
 
+  //Creating a flock of birds and chosing the best one to pass the genes
   makePop(){
     let newPop = [];
     //Create pool
@@ -67,7 +70,7 @@ class Neat{
         pool.push(this.pop[x]);
       }
     }
-    for(let x=0;x<this.popSize;x++){
+    for(let x=0;x<this.numGen;x++){
       newPop.push(this.crossover(pool));
     }
     this.pop = newPop;
@@ -82,11 +85,12 @@ class Neat{
     for(let x=0;x<parents[0].genes.length;x++){ //For each layers
       let tNodes = [];
       for(let y=0;y<parents[0].genes[x].length;y++){ //For each nodes
-        let tWeights = [];
+        let Weights = [];
         for(let z=0;z<parents[0].genes[x][y].length;z++){ //For each weights
-          tWeights.push((parseFloat(parents[0].genes[x][y][z])+parseFloat(parents[1].genes[x][y][z]))/2);
+          Weights.push((parseFloat(parents[0].genes[x][y][z])+parseFloat(parents[1].genes[x][y][z]))/2);
+          console.log("passing genes further")
         }
-        tNodes.push(tWeights);
+        tNodes.push(Weights);
       }
       genes.push(tNodes);
     }
@@ -96,6 +100,7 @@ class Neat{
     return new Creature(nn, mutatedGenes);
   }
 
+  //fusiing genes between generations
   mutate(genes){
     let newGenes = genes;
     let layer = floor(random(0, genes.length));
@@ -103,6 +108,7 @@ class Neat{
       if(floor(random(0,100))<this.mutationRate*100){
         for(let y=0;y<genes[layer][x];y++){ //For each weights
           let rdmChange = random(-0.1,0.1);
+          console.log("New mutation obtained!🐣")
           newGenes[layer][x][y] +=rdmChange;
         }
       }
@@ -110,21 +116,21 @@ class Neat{
     return newGenes;
   }
 
-  setCreatureNum(popSize){
-    this.popSize = popSize;
+  setCreatureNum(numGen){
+    this.numGen = numGen;
   }
 
   setMutationRate(mutationRate){
     this.mutationRate = mutationRate;
   }
 
+  //showng the neural network and weight of particular pipe's hitboxes
   getNeuralDisplay(creatureIndex, width, height, nodeSize = 15){
     let display = createGraphics(width, height);
     let nn = this.pop[creatureIndex].nn;
     for(let x=0;x<nn.layer.length;x++){
   		display.noStroke();
   		let locX = width/nn.layer.length*x+50;
-  		//line(locX, 0, locX, height);
   		for(let y=0;y<nn.layer[x].node.length;y++){
   			let locY = height/(nn.layer[x].node.length+1)*(y+1);
   			for(let z=0;z<nn.layer[x].node[y].weights.length;z++){

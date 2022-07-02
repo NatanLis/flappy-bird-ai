@@ -105,6 +105,7 @@ class Bird{
       this.velY*=0.9;
 
       this.timeScore--;
+      console.log("Flap↑")
     }
   }
   //death
